@@ -3,6 +3,7 @@ var fs = require('fs'),
 		filePath = path.join(__dirname, 'ads/internal.html'),
 		minify = require('html-minifier').minify;
 
+//function to check for an empty object
 function isEmpty(obj) {
     for(var prop in obj) {
         if(obj.hasOwnProperty(prop))
@@ -12,29 +13,31 @@ function isEmpty(obj) {
     return JSON.stringify(obj) === JSON.stringify({});
 }
 		
-var segments = [
-	"login_ads",
-	"login",
-	"internal",
-	"agency",
-	"carrier",
-	"LEO",
-	"touroperator",
-	"3rdparty",
-	"airport",
-	"ctd",
-	"systemprovider"
-];
+function readFiles(dirname, onFileContent, onError) {
+  fs.readdir(dirname, function(err, filenames) {
+    if (err) {
+      onError(err);
+      return;
+    }
+    filenames.forEach(function(filename) {
+      fs.readFile(dirname + filename, 'utf-8', function(err, content) {
+        if (err) {
+          onError(err);
+          return;
+        }
+        onFileContent(filename, content);
+      });
+    });
+  });
+}
 
-var text = "";
 
-var jsonFile = {
-	
-};
+var jsonFile = { };
 		
-for ( var i = 0; i < segments.length; i++ ) {
 		
-	var segment = segments[i];	
+readFiles('ads/', function(filename, content) {
+		
+	var segment = filename.replace(".html", "");
 	
 	filePath = path.join(__dirname, 'ads/' + segment + '.html');
 	
@@ -51,7 +54,7 @@ for ( var i = 0; i < segments.length; i++ ) {
 					splitVal = "body";
 				}
 				
-				var result = data.replace(/\r?\n|\r/g, "").replace(/\s\s+/g, ' ');;
+				var result = data.replace(/\r?\n|\r/g, "").replace(/\s\s+/g, ' ').replace(/"/g, "'");
 				result = "" + result.trim() + "";
 				
 				var obj = {};
@@ -86,7 +89,9 @@ for ( var i = 0; i < segments.length; i++ ) {
 		});
 	}(segment));
 		
-}
+}, function(err) {
+  console.log(err);
+});
 
 
 
