@@ -13,6 +13,7 @@ function isEmpty(obj) {
     return JSON.stringify(obj) === JSON.stringify({});
 }
 		
+//readfile and get file name
 function readFiles(dirname, onFileContent, onError) {
   fs.readdir(dirname, function(err, filenames) {
     if (err) {
@@ -37,13 +38,13 @@ var jsonFile = { };
 		
 readFiles('ads/', function(filename, content) {
 		
-	var segment = filename.replace(".html", "");
+	var mySegment = filename.replace(".html", "");
+	var data = content;
+	filePath = path.join(__dirname, 'ads/' + filename);
 	
-	filePath = path.join(__dirname, 'ads/' + segment + '.html');
-	
-	(function(mySegment){
-		fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
-			if(!err) {
+	//(function(mySegment){
+		//fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
+			//if(!err) {
 				
 				//split segment name 
 				var segmentVal = mySegment.split("_")[0];
@@ -81,13 +82,13 @@ readFiles('ads/', function(filename, content) {
 						//console.log("The file was saved!");
 				}); 
 				
-			}
-			else {
-				console.log(err);
-			}
+			//}
+			//else {
+			//	console.log(err);
+			//}
 			
-		});
-	}(segment));
+		//});
+	//}(segment));
 		
 }, function(err) {
   console.log(err);
