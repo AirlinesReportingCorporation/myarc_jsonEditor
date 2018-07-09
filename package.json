@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-		"prod": "node index.js",
-		"uat": "node uat.js"
+    "prod": "node index.js",
+    "uat": "node uat.js"
   },
   "author": "",
   "license": "ISC",
