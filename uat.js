@@ -1,6 +1,6 @@
 var fs = require('fs'),
 		path = require ('path'),
-		filePath = path.join(__dirname, 'ads_uat/internal.html'),
+		filePath = path.join(__dirname, 'ads/internal.html'),
 		minify = require('html-minifier').minify;
 
 //function to check for an empty object
@@ -36,11 +36,11 @@ function readFiles(dirname, onFileContent, onError) {
 var jsonFile = { };
 
 
-readFiles('ads_uat/', function(filename, content) {
+readFiles('ads/', function(filename, content) {
 
 	var mySegment = filename.replace(".html", "");
 	var data = content;
-	filePath = path.join(__dirname, 'ads_uat/' + filename);
+	filePath = path.join(__dirname, 'ads/' + filename);
 
 	//(function(mySegment){
 		//fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
@@ -74,7 +74,7 @@ readFiles('ads_uat/', function(filename, content) {
 
 				var text = JSON.stringify(jsonFile);
 
-				fs.writeFile(path.join(__dirname, 'ads_uat/data.json'), text, 'utf8', function (err) {
+				fs.writeFile(path.join(__dirname, 'ads/data.json'), text, 'utf8', function (err) {
 						if(err) {
 								return console.log(err);
 						}
